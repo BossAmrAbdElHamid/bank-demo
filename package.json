@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:order": "node services/order-service/app.js",
-    "start:payment": "node services/payment-service/app.js",
-    "start:notification": "node services/notification-service/app.js",
+    "start:order": "node backend/order-service/app.js",
+    "start:payment": "node backend/payment-service/app.js",
+    "start:notification": "node backend/notification-service/app.js",
     "start:gateway": "node api-gateway/app.js",
     "start:frontend": "node frontend/app.js"
   },

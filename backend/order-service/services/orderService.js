@@ -1,3 +1,4 @@
+'use strict';
 const { v4: uuidv4 } = require("uuid");
 const orderRepo = require("../repositories/orderRepository");
 const db = require("../../../shared/db/db");

@@ -4,7 +4,6 @@ class EventBusServer extends eventEmitter {
     constructor() {
         super();
         this.subscribers = {};
-        this.publishedEvents = [];
         console.log("🚀 EventBus initialized");
     }
 
@@ -18,7 +17,6 @@ class EventBusServer extends eventEmitter {
     }
 
     async publish(event) {
-        // Validate event
         if (!event.eventId) {
             console.error("❌ [EventBus] Event missing eventId:", event);
             return;
@@ -47,7 +45,6 @@ class EventBusServer extends eventEmitter {
         }
     }
 
-    // Get all subscriptions for debugging
     getSubscriptions() {
         return Object.keys(this.subscribers).reduce((acc, type) => {
             acc[type] = this.subscribers[type].length;
@@ -56,4 +53,14 @@ class EventBusServer extends eventEmitter {
     }
 }
 
-module.exports = new EventBusServer();
+// Create single instance - SINGLETON PATTERN
+let instance = null;
+
+function getInstance() {
+    if (!instance) {
+        instance = new EventBusServer();
+    }
+    return instance;
+}
+
+module.exports = getInstance();
