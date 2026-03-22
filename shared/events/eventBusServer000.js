@@ -53,14 +53,9 @@ class EventBusServer extends eventEmitter {
     }
 }
 
-// Create single instance - SINGLETON PATTERN
-let instance = null;
-
-function getInstance() {
-    if (!instance) {
-        instance = new EventBusServer();
-    }
-    return instance;
+// Use global to ensure singleton across requires
+if (!global.eventBusInstance) {
+    global.eventBusInstance = new EventBusServer();
 }
 
-module.exports = getInstance();
+module.exports = global.eventBusInstance;

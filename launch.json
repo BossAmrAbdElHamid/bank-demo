@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Order Service",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/order-service/app.js",
+      "restart": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Payment Service",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/payment-service/app.js",
+      "restart": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Notification Service",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/backend/notification-service/app.js",
+      "restart": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "API Gateway",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/api-gateway/app.js",
+      "restart": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Frontend",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/frontend/app.js",
+      "restart": true,
+      "console": "integratedTerminal"
+    }
+  ]
+}
