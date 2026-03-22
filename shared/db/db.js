@@ -4,8 +4,8 @@ class Database {
     constructor() {
         this.pool = mysql.createPool({
             host: "localhost",
-            user: "root",
-            password: "**********",
+            user: "root",          // Change this if your MySQL user is different
+            password: "maverick977",  // Replace with your actual MySQL password
             database: "bank_demo",
             waitForConnections: true,
             connectionLimit: 10
