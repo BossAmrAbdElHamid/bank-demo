@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const orderRepo = require("../repositories/orderRepository");
 const db = require("../../../shared/db/db");
-const eventBus = require("../../../shared/events/eventBusServer");
+const eventBus = require("../../../shared/events/eventBusServer");  // ✅ Shared EventBus
 const logger = require("../../../shared/utils/logger");
 
 class OrderService {
@@ -37,7 +37,7 @@ class OrderService {
 
             // Save to database
             await orderRepo.create(order);
-            console.log("✅ Order saved to database");
+            console.log("✅ Order saved to database:", order.id);
 
             // Create and publish event
             const eventId = uuidv4();
@@ -47,13 +47,15 @@ class OrderService {
                 data: order
             };
 
-            console.log("📤 Publishing order_created event to EventBus...");
+            console.log("\n📤 [Order Service] Publishing event to EventBus...");
+            console.log(`   Event ID: ${eventId}`);
+            console.log(`   Event Type: order_created`);
             console.log(`   Current subscribers:`, eventBus.getSubscriptions());
             
             await eventBus.publish(event);
 
             await logger.log("order-service", "INFO", `Order ${order.id} created`);
-            console.log("✅ Order created successfully\n");
+            console.log("✅ Event published successfully\n");
 
             return order;
         } catch (error) {

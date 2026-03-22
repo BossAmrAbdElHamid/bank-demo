@@ -1,4 +1,4 @@
-const eventBus = require("../../shared/events/eventBusServer");
+const eventBus = require("../../shared/events/eventBusServer");  // ✅ Shared EventBus
 const logger = require("../../shared/utils/logger");
 
 console.log("\n=====================================");
@@ -27,12 +27,11 @@ eventBus.subscribe("order_created", async (event) => {
 
 console.log("✅ Notification Service subscribed to: order_created");
 console.log("🔔 Notification Service listening for events...");
+console.log("✅ Current subscriptions:", eventBus.getSubscriptions());
 console.log("=====================================\n");
 
 // Keep the process alive indefinitely
-setInterval(() => {
-    // This empty interval keeps the process running
-}, 1000);
+setInterval(() => {}, 1000);
 
 // Graceful shutdown
 process.on('SIGINT', () => {

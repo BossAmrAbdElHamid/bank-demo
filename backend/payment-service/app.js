@@ -1,4 +1,4 @@
-const eventBus = require("../../shared/events/eventBusServer");
+const eventBus = require("../../shared/events/eventBusServer");  // ✅ Shared EventBus
 const paymentService = require("./services/paymentService");
 
 console.log("\n=====================================");
@@ -13,12 +13,11 @@ eventBus.subscribe("order_created", async (event) => {
 
 console.log("✅ Payment Service subscribed to: order_created");
 console.log("💳 Payment Service listening for events...");
+console.log("✅ Current subscriptions:", eventBus.getSubscriptions());
 console.log("=====================================\n");
 
 // Keep the process alive indefinitely
-setInterval(() => {
-    // This empty interval keeps the process running
-}, 1000);
+setInterval(() => {}, 1000);
 
 // Graceful shutdown
 process.on('SIGINT', () => {
