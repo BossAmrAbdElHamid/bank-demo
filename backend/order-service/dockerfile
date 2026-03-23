@@ -9,6 +9,7 @@ RUN npm install
 # copy service code
 COPY . .
 
+
 EXPOSE 3001
 
 CMD ["node", "app.js"]
