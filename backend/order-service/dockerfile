@@ -3,8 +3,7 @@ FROM node:18
 WORKDIR /app
 
 # copy root package.json (important because dependencies are there)
-COPY ../../package*.json ./
-
+COPY package*.json ./
 RUN npm install
 
 # copy service code
