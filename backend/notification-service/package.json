@@ -1,0 +1,20 @@
+{
+  "name": "bank-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:order": "node backend/order-service/app.js",
+    "start:payment": "node backend/payment-service/app.js",
+    "start:notification": "node backend/notification-service/app.js",
+    "start:gateway": "node api-gateway/app.js",
+    "start:frontend": "node frontend/app.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "kafkajs": "^2.2.4",
+    "mysql2": "^3.6.0",
+    "uuid": "^9.0.0"
+  }
+}
