@@ -17,7 +17,7 @@ COPY backend/order-service ./
 COPY shared ./shared
 
 # Expose port (if your service uses 3000)
-EXPOSE 3000
+EXPOSE 3001
 
 # Start the service
 CMD ["node", "app.js"]

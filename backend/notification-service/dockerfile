@@ -1,11 +1,13 @@
+# Notification Service Dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
 
-COPY shared ./shared
-COPY backend/notification-service ./
-
+COPY backend/notification-service/package*.json ./
 RUN npm install
+
+COPY backend/notification-service ./
+COPY shared ./shared
 
 EXPOSE 3003
 

@@ -1,13 +1,13 @@
-FROM node:18
+# Frontend Dockerfile
+FROM node:18-alpine
 
 WORKDIR /app
 
-# copy root package.json (important because dependencies are there)
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
 
-# copy service code
-COPY . .
+COPY frontend ./
+COPY shared ./shared
 
 EXPOSE 4000
 

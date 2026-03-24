@@ -1,11 +1,13 @@
+# Payment Service Dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
 
-COPY shared ./shared
-COPY backend/payment-service ./
-
+COPY backend/payment-service/package*.json ./
 RUN npm install
+
+COPY backend/payment-service ./
+COPY shared ./shared
 
 EXPOSE 3002
 
