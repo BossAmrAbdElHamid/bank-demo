@@ -29,4 +29,4 @@ app.post("/buy", async (req, res) => {
     }
 });
 
-app.listen(4000, () => console.log("Frontend running"));
+app.listen(80, () => console.log("Frontend running"));
