@@ -1,16 +1,15 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy shared directory first
-COPY shared /app/shared
+# Copy shared directory
+COPY shared ./shared
 
-# Copy service files
-COPY backend/order-service .
+# Copy service
+COPY backend/order-service ./
 
-# Install dependencies (from service root)
+# Install dependencies
 RUN npm install
-
 
 EXPOSE 3001
 
