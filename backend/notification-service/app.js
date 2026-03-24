@@ -1,4 +1,4 @@
-const eventBus = require("../../shared/events/eventBusKafka");  // ✅ KAFKA
+const eventBus = require("./shared/events/eventBusKafka");  // ✅ KAFKA
 const notificationService = require("./services/notificationService");
 
 console.log("\n=====================================");

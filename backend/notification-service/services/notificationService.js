@@ -1,6 +1,6 @@
-const db = require("../../../shared/db/db");
+const db = require("../shared/db/db");
 const { v4: uuidv4 } = require("uuid");
-const logger = require("../../../shared/utils/logger");
+const logger = require("../shared/utils/logger");
 
 class NotificationService {
     async handle(event) {
