@@ -14,7 +14,7 @@ RUN npm install
 COPY backend/order-service ./ 
 
 # Copy shared modules
-COPY shared ./shared
+# COPY shared ./shared
 
 # Expose port (if your service uses 3000)
 EXPOSE 3001
