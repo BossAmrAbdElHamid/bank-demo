@@ -1,5 +1,5 @@
-const db = require("../../../shared/db/db");
-const logger = require("../../../shared/utils/logger");
+const db = require("../shared/db/db");
+const logger = require("../shared/utils/logger");
 
 class PaymentService {
     constructor() {
