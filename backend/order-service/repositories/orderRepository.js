@@ -1,4 +1,4 @@
-const db = require("../../../shared/db/db");
+const db = require("../shared/db/db");
 
 class OrderRepository {
     async create(order) {

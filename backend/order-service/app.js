@@ -3,7 +3,7 @@ const app = express();
 const orderController = require("./controllers/orderController");
 
 // Import the shared EventBus
-const eventBus = require("../../shared/events/eventBusKafka");
+const eventBus = require("./shared/events/eventBusKafka");
 
 app.use(express.json());
 
