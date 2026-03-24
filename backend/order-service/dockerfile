@@ -2,12 +2,14 @@ FROM node:18
 
 WORKDIR /app
 
-# copy root package.json (important because dependencies are there)
-COPY package*.json ./
-RUN npm install
+# Copy shared directory first
+COPY shared /app/shared
 
-# copy service code
-COPY . .
+# Copy service files
+COPY backend/order-service .
+
+# Install dependencies (from service root)
+RUN npm install
 
 
 EXPOSE 3001
