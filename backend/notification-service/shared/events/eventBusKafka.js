@@ -6,7 +6,8 @@ class KafkaEventBus {
         
         this.kafka = new Kafka({
             clientId: `bank-demo-${this.serviceName}`,
-            brokers: ['localhost:9092']
+            //brokers: ['localhost:9092']
+            brokers: ['kafka:9092']
         });
         this.producer = this.kafka.producer();
         // ✅ Each service gets unique groupId
