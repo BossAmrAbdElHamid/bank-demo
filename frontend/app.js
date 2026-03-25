@@ -17,7 +17,7 @@ app.get("/buy", (req, res) => res.render("buy"));
 
 app.post("/buy", async (req, res) => {
     try {
-        await axios.post("http://localhost:3000/buy", {
+        await axios.post("http://api-gateway:3000/buy", {
             userId: "1",
             productId: req.body.productId,
             quantity: 10
