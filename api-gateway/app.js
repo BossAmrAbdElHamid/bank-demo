@@ -7,7 +7,7 @@ app.use(express.json());
 app.post("/buy", async (req, res) => {
     try {
         console.log("API Gateway received request:", req.body);
-        const response = await axios.post("http://localhost:3001/orders", req.body);
+        const response = await axios.post("http://order-service:3001/orders", req.body);
         console.log("Order Service response:", response.data);
         res.json(response.data);
     } catch (error) {
