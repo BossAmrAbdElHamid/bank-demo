@@ -1,13 +1,19 @@
+version: '3.8'
+
 services:
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
+    container_name: bank-demo-zookeeper-1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
+    container_name: bank-demo-kafka-1
     depends_on:
       - zookeeper
     ports:
@@ -15,41 +21,60 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
-  order-service:
-    image: bossamrabdelhamid/order-service:latest
-    depends_on:
-      - kafka
-
-  payment-service:
-    image: bossamrabdelhamid/payment-service:latest
-    depends_on:
-      - kafka
-
-  notification-service:
-    image: bossamrabdelhamid/notification-service:latest
-    depends_on:
-      - kafka
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   api-gateway:
-    image: bossamrabdelhamid/api-gateway:latest
+    build: ./api-gateway
+    container_name: bank-demo_api-gateway_1
     ports:
       - "3000:3000"
+    environment:
+      - SERVICE_NAME=api-gateway
+      - ORDER_SERVICE_URL=http://order-service:3001
     depends_on:
-      - order-service
-      - payment-service
-      - notification-service
+      kafka:
+        condition: service_healthy
 
-  frontend:
-    image: bossamrabdelhamid/frontend:latest
+  order-service:
+    build: ./order-service
+    container_name: bank-demo_order-service_1
     ports:
-      - "80:80"
+      - "3001:3001"
+    environment:
+      - SERVICE_NAME=order-service
+      - KAFKA_BROKER=kafka:9092
+      - DB_HOST=bank-demo.cbskw4a8ifs9.eu-north-1.rds.amazonaws.com
+      - DB_PORT=3306
+      - DB_USER=admin
+      - DB_PASSWORD=YOUR_PASSWORD
+      - DB_NAME=bank_demo
     depends_on:
-      - api-gateway
+      kafka:
+        condition: service_healthy
+
+  payment-service:
+    build: ./payment-service
+    container_name: bank-demo_payment-service_1
+    environment:
+      - SERVICE_NAME=payment-service
+      - KAFKA_BROKER=kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  notification-service:
+    build: ./notification-service
+    container_name: bank-demo_notification-service_1
+    environment:
+      - SERVICE_NAME=notification-service
+      - KAFKA_BROKER=kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
