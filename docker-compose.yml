@@ -21,8 +21,10 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "9092"]
@@ -30,20 +32,8 @@ services:
       timeout: 5s
       retries: 10
 
-  api-gateway:
-    build: ./api-gateway
-    container_name: bank-demo_api-gateway_1
-    ports:
-      - "3000:3000"
-    environment:
-      - SERVICE_NAME=api-gateway
-      - ORDER_SERVICE_URL=http://order-service:3001
-    depends_on:
-      kafka:
-        condition: service_healthy
-
   order-service:
-    build: ./order-service
+    image: bossamrabdelhamid/order-service:latest
     container_name: bank-demo_order-service_1
     ports:
       - "3001:3001"
@@ -53,14 +43,14 @@ services:
       - DB_HOST=bank-demo.cbskw4a8ifs9.eu-north-1.rds.amazonaws.com
       - DB_PORT=3306
       - DB_USER=admin
-      - DB_PASSWORD=YOUR_PASSWORD
+      - DB_PASSWORD=maverick977
       - DB_NAME=bank_demo
     depends_on:
       kafka:
         condition: service_healthy
 
   payment-service:
-    build: ./payment-service
+    image: bossamrabdelhamid/payment-service:latest
     container_name: bank-demo_payment-service_1
     environment:
       - SERVICE_NAME=payment-service
@@ -70,7 +60,7 @@ services:
         condition: service_healthy
 
   notification-service:
-    build: ./notification-service
+    image: bossamrabdelhamid/notification-service:latest
     container_name: bank-demo_notification-service_1
     environment:
       - SERVICE_NAME=notification-service
@@ -78,3 +68,24 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
+
+  api-gateway:
+    image: bossamrabdelhamid/api-gateway:latest
+    container_name: bank-demo_api-gateway_1
+    ports:
+      - "3000:3000"
+    environment:
+      - SERVICE_NAME=api-gateway
+      - ORDER_SERVICE_URL=http://order-service:3001
+    depends_on:
+      - order-service
+      - payment-service
+      - notification-service
+
+  frontend:
+    image: bossamrabdelhamid/frontend:latest
+    container_name: bank-demo_frontend_1
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
