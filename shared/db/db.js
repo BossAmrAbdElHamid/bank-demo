@@ -8,7 +8,7 @@ class Database {
             password: "maverick977",  // Replace with your actual MySQL password
             database: "bank-demo",
             waitForConnections: true,
-            connectionLimit: 10*/
+            connectionLimit: 10   ///////////// */
             host: "bank-demo.cbskw4a8ifs9.eu-north-1.rds.amazonaws.com",
             user: "admin",          // Change this if your MySQL user is different
             password: "maverick977",  // Replace with your actual MySQL password
