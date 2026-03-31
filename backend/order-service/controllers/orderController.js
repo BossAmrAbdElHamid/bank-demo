@@ -22,6 +22,7 @@ class OrderController {
             res.json(order);
         } catch (err) {
             console.error("❌ Error in controller:", err.message);
+            
             res.status(500).json({ error: err.message });
         }
     }
